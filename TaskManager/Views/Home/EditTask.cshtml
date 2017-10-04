@@ -1,0 +1,13 @@
+﻿@model TaskManager.DataAccessLayer.Models.Task
+@{
+    ViewBag.Title = "EditTask";
+}
+
+<form method="post" action="@Url.Action("ProcessForm")">
+    <textarea name="Description" placeholder="Description"></textarea>
+    <br />
+    <input type="text" name="Priority" placeholder="Priority" />
+    <br />
+    <input type="submit" value="Отправить" />
+</form>
+

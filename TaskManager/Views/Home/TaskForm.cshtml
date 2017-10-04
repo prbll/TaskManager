@@ -1,0 +1,42 @@
+﻿@model TaskManager.DataAccessLayer.Models.Task
+@{
+    string url;
+    var date = Model.Deadline == DateTime.MinValue ? null : Model.Deadline.ToString("yyyy-MM-dd");
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "Новая задача";
+        url = Url.Action("ProcessForm");
+    }
+    else
+    {
+        ViewBag.Title = "Редактирование задачи";
+        url = Url.Action("EditTask");
+    }
+}
+
+<form method="post" class="form-horizontal" action="@url">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="form-group">
+        <label for="exampleTextarea">Укажите описание задачи</label>
+        <textarea class="form-control" id="exampleTextarea" rows="3" name="Description" aria-describedby="description-validation-message" placeholder="Описание">@Model.Description</textarea>
+        <small id="description-validation-message" style="color: red;" class="form-text text-muted">@Html.ValidationMessage("EmptyDescription")</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Укажите приоритет задачи</label>
+        <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Priority" placeholder="Приоритет задачи" value="@Model.Priority">
+        <small id="emailHelp" class="form-text text-muted">Приоритет является числом.</small>
+    </div>
+    <div class="form-group">
+        <label for="deadline">Укажите дату дедлайна</label>
+        <input type="date" class="form-control" name="deadline" aria-describedby="deadline-validation-message" value="@date" id="deadline" />
+        <small id="deadline-validation-message" style="color: red;" class="form-text text-muted">@Html.ValidationMessage("EmptyDeadline")</small>
+    </div>
+    @if (Model.Id == 0)
+    {
+        <button type="submit" class="btn btn-success">Добавить задачу</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-success">Редактировать задачу</button>
+    }
+</form>
